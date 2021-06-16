@@ -19,7 +19,9 @@ public:
 
     void AddCity(string, int, int);
     double CityDistance(string, string);
-    double FindClosestCity(string);
+    double FindPath(string, string);
+    void EraseNetwork();
+    void BuildNetwork();
     void PrintCities();
 };
 

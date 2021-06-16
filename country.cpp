@@ -41,34 +41,152 @@ double Country::CityDistance(string city_one, string city_two){
     return 0;
 };
 
-double Country::FindClosestCity(string city_one){
-    double closest_distance = 0;
-    string closest_city_name = "";
+double Country::FindPath(string city_one, string city_two){
+
+    string city_a;
+    string city_b;
+    string path[50];
+    string* conection;
+    int path_counter;
 
     for (int a = 0; a < 50; a++){
-        if (cities[a].GetName() == city_one){
-            for (int b = 0; b < 50; b++){
-                if (cities[b].GetName() != city_one){
-                    if (CityDistance(city_one, cities[b].GetName()) < closest_distance){
-                        closest_distance = CityDistance(city_one, cities[b].GetName());
-                        closest_city_name = cities[b].GetName();
-                    }
-                    else if (closest_distance == 0){
-                        closest_distance = CityDistance(city_one, cities[b].GetName());
-                        closest_city_name = cities[b].GetName();
-                    }
+        city_a = cities[a].GetName();
+        if (city_a != ""){
+
+            for (int b = 0; b < 50; a++){
+                city_b = cities[b].GetName();
+                if (city_b != ""){
+
                 }
             }
         }
     }
-    cout << closest_city_name << endl;
-    return closest_distance;
+
+    return 0;
+};
+
+void Country::EraseNetwork(){
+    for (int a = 0; a < 50; a++){
+        if (cities[a].GetName() != ""){
+            cities[a].EraseConections();
+        }
+    }
+}
+
+void Country::BuildNetwork(){
+    EraseNetwork();
+    double closest_distance = 0;
+    double second_closest = 0;
+    double distance = 0;
+    string closest_city_name = "";
+    string second_closest_name = "";
+    string city_one;
+    string city_two;
+    string* city_conections;
+    bool flag = true;
+
+    for (int a = 0; a < 50; a++){
+        if (cities[a].GetName() != ""){
+            city_one = cities[a].GetName();
+
+            for (int b = 0; b < 50; b++){
+                if (cities[b].GetName() != ""){
+                    city_two = cities[b].GetName();
+                    distance = CityDistance(city_one, city_two);
+
+                    if (distance < closest_distance && city_one != city_two){
+                        closest_distance = distance;
+                        closest_city_name = city_two;
+                    }
+                    else if (closest_distance == 0 && city_one != city_two){
+                        closest_distance = distance;
+                        closest_city_name = city_two;
+                    }
+                }
+            }
+
+            for (int b = 0; b < 50; b++){
+                if (cities[b].GetName() != ""){
+                    city_two = cities[b].GetName();
+                    distance = CityDistance(city_one, city_two);
+
+                    if (closest_city_name != city_two){
+                        if (distance < second_closest && city_one != city_two){
+                            second_closest = distance;
+                            second_closest_name = city_two;
+                        }
+                        else if (second_closest == 0 && city_one != city_two){
+                            second_closest = distance;
+                            second_closest_name = city_two;
+                        }
+                    }
+                }
+            }
+
+            for (int b = 0; b < 50; b++){
+                city_conections = cities[b].GetConections();
+
+                for (long unsigned int c = 0; c < city_conections->length(); c++){
+                    if ((city_conections[c] == city_one || city_conections[c] == closest_city_name) && city_conections[c] != ""){
+                        flag = false;
+                    }
+                }
+            }
+
+            if (flag == false){
+                cities[a].ConectCity(second_closest_name);
+            }
+            else{
+                cities[a].ConectCity(closest_city_name);
+            }
+            
+            closest_distance = 0;
+            second_closest = 0;
+            closest_city_name = "";
+            second_closest_name = "";
+            flag = true;
+            
+            /*
+            string second_closest_name = "";
+            double second_closest = 0;
+            for (int b = 0; b < 50; b++){
+                if (cities[b].GetName() != ""){
+                    city_two = cities[b].GetName();
+                    distance = CityDistance(city_one, city_two);
+
+                    if (closest_city_name != city_two){
+                        if (distance < second_closest && city_one != city_two){
+                            second_closest = distance;
+                            second_closest_name = city_two;
+                        }
+                        else if (second_closest == 0 && city_one != city_two){
+                            second_closest = distance;
+                            second_closest_name = city_two;
+                        }
+                    }
+                }
+            }
+
+            cities[a].ConectCity(second_closest_name);
+            second_closest_name = "";
+            second_closest = 0;
+            */
+        }
+    }
 }
 
 void Country::PrintCities(){
+    string* city_conections;
     for (int a = 0; a < 50; a++){
         if (cities[a].GetName() != ""){
             cout << cities[a].GetName() << endl;
+            city_conections = cities[a].GetConections();
+            for (long unsigned int b = 0; b < city_conections->length(); b++){
+                if (city_conections[b] != ""){
+                    cout << city_conections[b] << endl;
+                }
+            }
+            cout << endl;
         }
     }
 }

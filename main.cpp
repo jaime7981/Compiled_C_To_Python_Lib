@@ -11,11 +11,10 @@ int main(){
     country.AddCity("Iquique", 12, 8);
     country.AddCity("Los Andes", 1, 1);
     country.AddCity("Rancagua", 3, 8);
+    country.AddCity("Pirque", 2, 4);
+    country.AddCity("Pucon", 9, 5);
+    country.BuildNetwork();
     country.PrintCities();
-    cout << country.FindClosestCity("Santiago") << endl;
-    cout << country.FindClosestCity("Rancagua") << endl;
-    cout << country.CityDistance("Santiago", "Iquique") << endl;
-    cout << country.CityDistance("Santiago", "Los Andes") << endl;
 
     return 0;
 }
