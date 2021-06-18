@@ -10,7 +10,9 @@ class City{
 private:
     string name;
     string conections[10];
+    string nodes[10];
     int conection_counter;
+    int node_counter;
     int position[2];
     
 public:
@@ -20,8 +22,10 @@ public:
     string GetName();
     int* GetPositions();
     string* GetConections();
+    string* GetNodes();
     void EraseConections();
     void ConectCity(string);
+    void AddNode(string);
 };
 
 #endif

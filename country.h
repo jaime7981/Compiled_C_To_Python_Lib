@@ -21,6 +21,7 @@ public:
     double CityDistance(string, string);
     double FindPath(string, string);
     void EraseNetwork();
+    void CreateNodes();
     void BuildNetwork();
     void PrintCities();
 };

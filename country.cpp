@@ -1,15 +1,6 @@
 
 #include"country.h"
 
-int power(int x, int y) {
-   if (y == 0)
-   return 1;
-   else if (y%2 == 0)
-   return power(x, y/2)*power(x, y/2);
-   else
-   return x*power(x, y/2)*power(x, y/2);
-}
-
 Country::Country(string Name){
     name = Name;
     city_counter = 0;
@@ -46,16 +37,15 @@ double Country::FindPath(string city_one, string city_two){
     string city_a;
     string city_b;
     string path[50];
-    string* conection;
-    int path_counter;
+    //string* conection;
+    //int path_counter;
 
-    for (int a = 0; a < 50; a++){
-        city_a = cities[a].GetName();
-        if (city_a != ""){
-
-            for (int b = 0; b < 50; a++){
-                city_b = cities[b].GetName();
-                if (city_b != ""){
+    for (int a = 0;  a < 50; a++){
+        if (cities[a].GetName() != ""){
+            city_one = cities[a].GetName();
+            for (int b = 0; b < 50; b++){
+                if (cities[b].GetName() != ""){
+                    city_two = cities[b].GetName();
 
                 }
             }
@@ -69,6 +59,32 @@ void Country::EraseNetwork(){
     for (int a = 0; a < 50; a++){
         if (cities[a].GetName() != ""){
             cities[a].EraseConections();
+        }
+    }
+}
+
+void Country::CreateNodes(){
+    string city_one;
+    string city_two;
+
+    string *conections;
+
+    for (int a = 0;  a < 50; a++){
+        if (cities[a].GetName() != ""){
+            city_one = cities[a].GetName();
+            for (int b = 0; b < 50; b++){
+                if (cities[b].GetName() != ""){
+                    city_two = cities[b].GetName();
+
+                    conections = cities[b].GetConections();
+
+                    for (int c = 0; c < 10; c++){
+                        if (conections[c] == city_one && city_one != city_two){
+                            cities[a].AddNode(city_two);
+                        }
+                    }
+                }
+            }
         }
     }
 }
@@ -145,34 +161,10 @@ void Country::BuildNetwork(){
             closest_city_name = "";
             second_closest_name = "";
             flag = true;
-            
-            /*
-            string second_closest_name = "";
-            double second_closest = 0;
-            for (int b = 0; b < 50; b++){
-                if (cities[b].GetName() != ""){
-                    city_two = cities[b].GetName();
-                    distance = CityDistance(city_one, city_two);
-
-                    if (closest_city_name != city_two){
-                        if (distance < second_closest && city_one != city_two){
-                            second_closest = distance;
-                            second_closest_name = city_two;
-                        }
-                        else if (second_closest == 0 && city_one != city_two){
-                            second_closest = distance;
-                            second_closest_name = city_two;
-                        }
-                    }
-                }
-            }
-
-            cities[a].ConectCity(second_closest_name);
-            second_closest_name = "";
-            second_closest = 0;
-            */
         }
     }
+
+    CreateNodes();
 }
 
 void Country::PrintCities(){
@@ -180,12 +172,22 @@ void Country::PrintCities(){
     for (int a = 0; a < 50; a++){
         if (cities[a].GetName() != ""){
             cout << cities[a].GetName() << endl;
+            cout << "Conection::" << endl;
             city_conections = cities[a].GetConections();
             for (long unsigned int b = 0; b < city_conections->length(); b++){
                 if (city_conections[b] != ""){
                     cout << city_conections[b] << endl;
                 }
             }
+            cout << "Nodes:" << endl;
+
+            city_conections = cities[a].GetNodes();
+            for (long unsigned int b = 0; b < city_conections->length(); b++){
+                if (city_conections[b] != ""){
+                    cout << city_conections[b] << endl;
+                }
+            }
+
             cout << endl;
         }
     }
