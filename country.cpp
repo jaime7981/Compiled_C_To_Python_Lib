@@ -6,7 +6,6 @@ Country::Country(string Name){
     city_counter = 0;
 }
 
-
 void Country::AddCity(string name, int x, int y){
     if (city_counter < 50){
         cities[city_counter] = *new City(name, x, y);
@@ -32,27 +31,8 @@ double Country::CityDistance(string city_one, string city_two){
     return 0;
 };
 
-double Country::FindPath(string city_one, string city_two){
+void Country::FindPath(){
 
-    string city_a;
-    string city_b;
-    string path[50];
-    //string* conection;
-    //int path_counter;
-
-    for (int a = 0;  a < 50; a++){
-        if (cities[a].GetName() != ""){
-            city_one = cities[a].GetName();
-            for (int b = 0; b < 50; b++){
-                if (cities[b].GetName() != ""){
-                    city_two = cities[b].GetName();
-
-                }
-            }
-        }
-    }
-
-    return 0;
 };
 
 void Country::EraseNetwork(){
@@ -86,6 +66,7 @@ void Country::CreateNodes(){
                 }
             }
         }
+        cities[a].AddNode(cities[a].GetConections()[0]);
     }
 }
 
@@ -172,13 +153,6 @@ void Country::PrintCities(){
     for (int a = 0; a < 50; a++){
         if (cities[a].GetName() != ""){
             cout << cities[a].GetName() << endl;
-            cout << "Conection::" << endl;
-            city_conections = cities[a].GetConections();
-            for (long unsigned int b = 0; b < city_conections->length(); b++){
-                if (city_conections[b] != ""){
-                    cout << city_conections[b] << endl;
-                }
-            }
             cout << "Nodes:" << endl;
 
             city_conections = cities[a].GetNodes();

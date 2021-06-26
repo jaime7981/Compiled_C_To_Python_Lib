@@ -19,7 +19,7 @@ public:
 
     void AddCity(string, int, int);
     double CityDistance(string, string);
-    double FindPath(string, string);
+    void FindPath();
     void EraseNetwork();
     void CreateNodes();
     void BuildNetwork();

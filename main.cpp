@@ -14,6 +14,7 @@ int main(){
     country.AddCity("Pirque", 2, 4);
     country.AddCity("Pucon", 9, 5);
     country.BuildNetwork();
+    country.FindPath();
     country.PrintCities();
 
     return 0;

@@ -1,0 +1,10 @@
+make --dry-run --always-make --keep-going --print-directory
+make: Entering directory '/home/jaimefdz/Documents/PBN/Tarea'
+g++ -std=c++11 -Wall -Wextra -Wundef -Werror -Wuninitialized -Winit-self -o main.o main.cpp -c
+g++ -std=c++11 -Wall -Wextra -Wundef -Werror -Wuninitialized -Winit-self -fPIC -o country.o country.cpp -c
+g++ -std=c++11 -Wall -Wextra -Wundef -Werror -Wuninitialized -Winit-self -fPIC -o city.o city.cpp -c
+g++ -shared country.o city.o -o libroadBuilder.so
+sudo mv libroadBuilder.so /usr/lib
+g++ main.o -o builder.exe -Wl,-rpath=/usr/lib -L/usr/lib -lroadBuilder
+make: Leaving directory '/home/jaimefdz/Documents/PBN/Tarea'
+ 
